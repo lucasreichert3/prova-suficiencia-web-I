@@ -2,9 +2,13 @@
   <div class="table-container">
     <div class="button-container">
       <div class="filter">
-        <app-input-filter (filterChanged)="handleFilter($event)"></app-input-filter>
+        <app-input-filter
+          (filterChanged)="handleFilter($event)"
+        ></app-input-filter>
       </div>
-      <button mat-raised-button color="primary" (click)="handleNewEmployee()">Novo funcionário</button>
+      <button mat-raised-button color="primary" (click)="handleNewEmployee()">
+        Novo funcionário
+      </button>
     </div>
     <table mat-table [dataSource]="employees" class="mat-elevation-z8">
       <ng-container matColumnDef="id">
@@ -41,12 +45,9 @@
             mat-mini-fab
             color="primary"
             aria-label="Example icon button with a menu icon"
+            (click)="handleEdit(employee)"
           >
-            <span
-              class="icon-link material-icons"
-              (click)="handleEdit(employee)"
-              style="padding: 0"
-            >
+            <span class="icon-link material-icons" style="padding: 0">
               mode_edit
             </span>
           </button>
@@ -54,9 +55,10 @@
             mat-mini-fab
             color="warn"
             aria-label="Example icon button with a filter list icon"
-            style="margin-left: 1em; max-height: 40px;"
+            style="margin-left: 1em; max-height: 40px"
+            (click)="openDialog(employee)"
           >
-            <span class="icon-link material-icons" (click)="openDialog(employee)"> delete </span>
+            <span class="icon-link material-icons"> delete </span>
           </button>
         </td>
       </ng-container>
