@@ -1,0 +1,35 @@
+<main class="content">
+  <div class="form-container">
+    <form [formGroup]="employeeForm">
+      <mat-form-field class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="employee_name" />
+        <mat-error *ngIf="getFieldControl('employee_name')">
+          Este campo é obrigatório
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Salário</mat-label>
+        <input matInput formControlName="employee_salary"  type="number"/>
+        <mat-error *ngIf="getFieldControl('employee_salary')">
+          Este campo é obrigatório
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <mat-label>Idade</mat-label>
+        <input matInput formControlName="employee_age" type="number" />
+        <mat-error *ngIf="getFieldControl('employee_age')">
+          Este campo é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <button
+      mat-raised-button
+      color="primary"
+      style="float: right"
+      (click)="handleSave()"
+    >
+      Salvar
+    </button>
+  </div>
+</main>

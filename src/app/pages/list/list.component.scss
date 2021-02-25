@@ -1,0 +1,43 @@
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 56px);
+  width: 100%;
+
+  .table-container {
+    height: 80vh;
+    width: 80%;
+
+    .button-container {
+      display: flex;
+      width: 100%;
+      padding: 1em 0;
+
+      button {
+        margin-left: auto;
+      }
+    }
+
+    table {
+      width: 100%;
+
+      th {
+        padding: 2.1em !important;
+      }
+
+      td {
+        padding: 1.4em 1.8em !important;
+      }
+
+      .icon-link {
+        cursor: pointer;
+        transition: 200ms;
+
+        &:hover {
+          color: #8e8e8e;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+ul {
+    display: flex;
+    padding: 20px;
+    background-color: #3F51B5;
+
+    a {
+        color: #fff;
+        text-decoration: none;
+        margin-left: 1rem;
+        padding: 10px;
+        transition: 200ms;
+        border-radius: 5px;
+
+        &:hover {
+            background-color: #34428f;
+        }
+    }
+}
