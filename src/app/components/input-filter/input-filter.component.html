@@ -1,0 +1,26 @@
+<form [formGroup]="inputForm">
+  <div class="input-container">
+    <mat-form-field class="full-width">
+      <input matInput formControlName="filter" style="width: 100%" />
+    </mat-form-field>
+    <button
+      mat-mini-fab
+      color="primary"
+      aria-label="Example icon button with a filter list icon"
+      style="margin-left: 1em"
+    >
+      <span class="icon-link material-icons" (click)="handleSearch()">
+        search
+      </span>
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="hasInputValue()"
+      (click)="handleCleanFilter()"
+      style="margin-left: 1rem;"
+    >
+      Limpar Filtro
+    </button>
+  </div>
+</form>

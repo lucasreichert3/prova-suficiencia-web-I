@@ -14,6 +14,9 @@ import {MatButtonModule} from '@angular/material/button';
 import { HeaderComponent } from './components/header/header.component';
 import {MatInputModule} from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { InputFilterComponent } from './components/input-filter/input-filter.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },
@@ -29,7 +32,9 @@ const routes: Routes = [
     AppComponent,
     ListComponent,
     FormComponent,
-    HeaderComponent
+    HeaderComponent,
+    ConfirmDialogComponent,
+    InputFilterComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +47,8 @@ const routes: Routes = [
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

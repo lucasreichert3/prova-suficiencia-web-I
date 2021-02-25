@@ -11,8 +11,13 @@
 
     .button-container {
       display: flex;
+      align-items: center;
       width: 100%;
       padding: 1em 0;
+
+      .filter {
+        width: 50%;
+      }
 
       button {
         margin-left: auto;
@@ -28,6 +33,7 @@
 
       td {
         padding: 1.4em 1.8em !important;
+        transition: 200ms;
       }
 
       .icon-link {
