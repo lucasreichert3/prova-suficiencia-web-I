@@ -1,5 +1,5 @@
 <main class="content">
-  <div class="table-container">
+  <div class="table-container" #customLoadingTemplate>
     <div class="button-container" *ngIf="!emptyState">
       <div class="filter">
         <app-input-filter
@@ -46,7 +46,9 @@
 
       <ng-container matColumnDef="age">
         <th mat-header-cell *matHeaderCellDef>Idade</th>
-        <td id="age" mat-cell *matCellDef="let employee">{{ employee.employee_age }}</td>
+        <td id="age" mat-cell *matCellDef="let employee">
+          {{ employee.employee_age }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
@@ -63,7 +65,7 @@
             </span>
           </button>
           <button
-          id="delete"
+            id="delete"
             mat-mini-fab
             color="warn"
             aria-label="Example icon button with a filter list icon"
@@ -82,9 +84,14 @@
     <mat-paginator
       [length]="totalRecord"
       [pageSize]="10"
-      *ngIf="!hasFilter"
+      *ngIf="!hasFilter && !emptyState"
       (page)="handlePageChange($event)"
     >
     </mat-paginator>
   </div>
+  <ngx-loading
+    [show]="loading"
+    [config]="{ backdropBorderRadius: '3px' }"
+    [template]="customLoadingTemplate"
+  ></ngx-loading>
 </main>

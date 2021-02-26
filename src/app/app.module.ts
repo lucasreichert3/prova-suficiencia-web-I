@@ -19,6 +19,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { InputFilterComponent } from './components/input-filter/input-filter.component';
 import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { NgxLoadingModule } from 'ngx-loading';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },
@@ -52,7 +53,8 @@ const routes: Routes = [
     MatInputModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgxLoadingModule.forRoot({})
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,6 +16,7 @@ export class ListComponent implements OnInit, OnDestroy {
   unSubscribe = new Subject<void>();
   displayedColumns: string[] = ['id', 'name', 'salary', 'age', 'actions'];
   emptyState = false;
+  loading = false;
   page = 0;
   totalRecord = 0;
   hasFilter = false;
@@ -31,16 +32,23 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   listEmployees() {
+    this.loading = true;
     this.employeeService
       .listEmployees(this.page)
       .pipe(takeUntil(this.unSubscribe))
       .subscribe(
         ({ total, list }) => {
-          this.employees = list
+          this.employees = list;
           this.totalRecord = total;
         },
-        () => (this.emptyState = true),
-        () => this.emptyState = false
+        () => {
+          this.loading = false;
+          this.emptyState = true;
+        },
+        () => {
+          this.emptyState = false;
+          this.loading = false;
+        }
       );
   }
 
@@ -78,12 +86,11 @@ export class ListComponent implements OnInit, OnDestroy {
     this.employees = this.employeeService.filterEmployee(filter);
     this.hasFilter = !!filter;
 
-    if (!filter) 
-      this.listEmployees();
-    
+    if (!filter) this.listEmployees();
   }
 
   handleTryAgain() {
+    this.emptyState = false;
     this.listEmployees();
   }
 
