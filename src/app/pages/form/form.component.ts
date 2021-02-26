@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Employee, EmployeeService } from 'src/app/employee.service';
 
 @Component({
@@ -16,7 +16,8 @@ export class FormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -57,37 +58,35 @@ export class FormComponent implements OnInit {
   }
 
   handleUpdate({ employee_name, employee_salary, employee_age }: any) {
-    this.employeeService.updateEmployee({
-      employee_name,
-      employee_salary,
-      employee_age,
-      id: this.currentEmployee.id,
-    }).subscribe(() => alert('Funcionário salvo com sucesso!'), () => this.handleErrorSave());
+    this.employeeService
+      .updateEmployee({
+        employee_name,
+        employee_salary,
+        employee_age,
+        id: this.currentEmployee.id,
+      })
+      .subscribe(
+        () => this.handleSuccessSave(),
+        () => this.handleErrorSave()
+      );
   }
 
   handleSaveNew({ employee_name, employee_salary, employee_age }: any) {
-    if (!this.editinEmployee) {
-      this.employeeService
-        .saveEmployee({
-          employee_name,
-          employee_salary,
-          employee_age,
-        })
-        .subscribe(
-          () => this.handleSuccessSave(),
-          () => this.handleErrorSave()
-        );
-    }
+    this.employeeService
+      .saveEmployee({
+        employee_name,
+        employee_salary,
+        employee_age,
+      })
+      .subscribe(
+        () => this.handleSuccessSave(),
+        () => this.handleErrorSave()
+      );
   }
 
   handleSuccessSave() {
     alert('Funcionário salvo com sucesso!');
-    this.employeeForm.setValue({
-      employee_name: '',
-      employee_salary: '',
-      employee_age: '',
-    });
-    this.employeeForm.markAsUntouched();
+    this.router.navigate(['/list']);
   }
 
   handleErrorSave() {
