@@ -1,5 +1,5 @@
 <main class="content">
-  <div class="table-container" #customLoadingTemplate>
+  <div class="table-container">
     <div class="button-container" *ngIf="!emptyState">
       <div class="filter">
         <app-input-filter
@@ -92,6 +92,5 @@
   <ngx-loading
     [show]="loading"
     [config]="{ backdropBorderRadius: '3px' }"
-    [template]="customLoadingTemplate"
   ></ngx-loading>
 </main>
