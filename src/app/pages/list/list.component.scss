@@ -53,7 +53,7 @@
   }
 }
 
-@media only screen and (max-width: 740px) {
+@media only screen and (min-width: 591px) and (max-width: 740px) {
   .table-container {
     td {
       padding: 0.9em 1em !important;
@@ -66,18 +66,64 @@
 }
 
 :host::ng-deep {
-  @media only screen and (max-width: 590px) {
+  @media only screen and (min-width: 350px) and (max-width: 590px) {
     .table-container {
+      width: 95% !important;
       thead {
         display: none;
       }
 
       td {
-        padding: 0.9em 1em !important;
+        padding: 0.9em 0.3em !important;
+      }
+    }
+
+    .button-container {
+      flex-direction: column-reverse !important;
+      justify-content: inherit !important;
+      align-items: inherit !important;
+
+      .filter {
+        width: 100% !important;
+
+        .full-width {
+          width: 80% !important;
+        }
+      }
+    }
+  }
+}
+
+:host::ng-deep {
+  @media only screen and (max-width: 350px) {
+    .table-container {
+      width: 98% !important;
+      thead {
+        display: none;
       }
 
-      th {
-        padding: 1.9em 1em !important;
+      #actions {
+        #delete {
+          margin-left: .1em !important;
+        }
+      }
+
+      td {
+        padding: 0.9em 0 !important;
+      }
+    }
+
+    .button-container {
+      flex-direction: column-reverse !important;
+      justify-content: inherit !important;
+      align-items: inherit !important;
+
+      .filter {
+        width: 100% !important;
+
+        .full-width {
+          width: 80% !important;
+        }
       }
     }
   }

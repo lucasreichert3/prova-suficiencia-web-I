@@ -2,6 +2,7 @@ ul {
     display: flex;
     padding: 20px;
     background-color: #3F51B5;
+    align-items: center;
 
     a {
         color: #fff;
@@ -13,6 +14,17 @@ ul {
 
         &:hover {
             background-color: #34428f;
+        }
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    ul {
+        padding: 12px;
+
+        a {
+            margin-left: 0.2rem !important;
+            padding: 5px;
         }
     }
 }
