@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Employee, EmployeeService } from 'src/app/employee.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list',
@@ -24,7 +25,8 @@ export class ListComponent implements OnInit, OnDestroy {
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class ListComponent implements OnInit, OnDestroy {
       () => {
         this.employees = this.employees.filter(({ id }) => employee.id !== id);
       },
-      () => alert('Erro ao exlcuir, tente novamentem mais tarde!')
+      () => this.displayToast('Erro ao excluir, tente novamentem mais tarde!')
     );
   }
 
@@ -97,5 +99,11 @@ export class ListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unSubscribe.next();
     this.unSubscribe.complete();
+  }
+
+  displayToast(message: string) {
+    this._snackBar.open(message, '', {
+      duration: 2000,
+    });
   }
 }

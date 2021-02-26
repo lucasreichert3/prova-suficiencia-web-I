@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee, EmployeeService } from 'src/app/employee.service';
 
@@ -17,7 +18,8 @@ export class FormComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private employeeService: EmployeeService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -85,11 +87,17 @@ export class FormComponent implements OnInit {
   }
 
   handleSuccessSave() {
-    alert('Funcionário salvo com sucesso!');
+    this.displayToast('Funcionário salvo com sucesso!');
     this.router.navigate(['/list']);
   }
 
   handleErrorSave() {
-    alert('Ocorreu algo errado! Tente novamente mais tarde');
+    this.displayToast('Ocorreu algo errado! Tente novamente mais tarde');
+  }
+
+  displayToast(message: string) {
+    this._snackBar.open(message, '', {
+      duration: 2000,
+    });
   }
 }

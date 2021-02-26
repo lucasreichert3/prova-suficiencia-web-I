@@ -20,6 +20,7 @@ import { InputFilterComponent } from './components/input-filter/input-filter.com
 import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { NgxLoadingModule } from 'ngx-loading';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },
@@ -54,7 +55,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatDialogModule,
     MatPaginatorModule,
-    NgxLoadingModule.forRoot({})
+    NgxLoadingModule.forRoot({}),
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
