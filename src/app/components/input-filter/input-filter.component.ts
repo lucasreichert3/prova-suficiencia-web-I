@@ -19,6 +19,7 @@ export class InputFilterComponent implements OnInit, OnDestroy {
   hasFilter = false;
   @Output() filterChanged = new EventEmitter<string>();
   unSubscribe = new Subject<void>();
+  previusValue = '';
 
   constructor(private fb: FormBuilder) {}
 
@@ -33,12 +34,16 @@ export class InputFilterComponent implements OnInit, OnDestroy {
   handleInputChanges() {
     this.inputForm.valueChanges
       .pipe(takeUntil(this.unSubscribe))
-      .subscribe(() => (this.hasFilter = false));
+      .subscribe(({ filter }: { filter: string }) => {
+        this.hasFilter = false
+        if (!filter.trim() && this.previusValue.trim()) this.hasFilter = true
+      });
   }
 
   handleSearch() {
     if (!this.hasFilter) {
       const { filter } = this.inputForm.value;
+      this.previusValue = filter;
       this.filterChanged.emit(filter);
     } else {
       this.handleCleanFilter();
@@ -47,7 +52,8 @@ export class InputFilterComponent implements OnInit, OnDestroy {
   }
 
   handleCleanFilter() {
-    this.inputForm.setValue({ filter: '' });
+    this.inputForm.setValue({ filter: '' }, { emitEvent: false });
+    this.previusValue = '';
     this.filterChanged.emit('');
   }
 
