@@ -15,6 +15,7 @@ export class ListComponent implements OnInit, OnDestroy {
   employees: Employee[];
   unSubscribe = new Subject<void>();
   displayedColumns: string[] = ['id', 'name', 'salary', 'age', 'actions'];
+  emptyState = false;
 
   constructor(
     private employeeService: EmployeeService,
@@ -30,7 +31,11 @@ export class ListComponent implements OnInit, OnDestroy {
     this.employeeService
       .listEmployees()
       .pipe(takeUntil(this.unSubscribe))
-      .subscribe((employees) => (this.employees = employees));
+      .subscribe(
+        (employees) => (this.employees = employees),
+        () => (this.emptyState = true),
+        () => this.emptyState = false
+      );
   }
 
   handleEdit(employee: Employee) {
@@ -59,11 +64,17 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   handleFilter(filter: string) {
-    this.employees = this.employees.filter(({ employee_name }) => employee_name.startsWith(filter))
+    this.employees = this.employees.filter(({ employee_name }) =>
+      employee_name.startsWith(filter)
+    );
 
     if (!filter) {
       this.listEmployees();
     }
+  }
+
+  handleTryAgain() {
+    this.listEmployees();
   }
 
   ngOnDestroy(): void {

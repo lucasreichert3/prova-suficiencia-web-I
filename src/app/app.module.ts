@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { InputFilterComponent } from './components/input-filter/input-filter.component';
+import { EmptyStateComponent } from './components/empty-state/empty-state.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },
@@ -34,7 +35,8 @@ const routes: Routes = [
     FormComponent,
     HeaderComponent,
     ConfirmDialogComponent,
-    InputFilterComponent
+    InputFilterComponent,
+    EmptyStateComponent
   ],
   imports: [
     CommonModule,

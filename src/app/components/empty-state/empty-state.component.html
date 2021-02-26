@@ -1,0 +1,12 @@
+<div class="empty-state-container" *ngIf="showMessage">
+  <div class="icon-container">
+    <span class="icon-link material-icons"> error_outline </span>
+  </div>
+  <h1>{{ title }}</h1>
+  <h2>{{ detail }}</h2>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="handleButton()">
+      {{ buttonMessage }}
+    </button>
+  </div>
+</div>

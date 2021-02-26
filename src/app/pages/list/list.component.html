@@ -1,6 +1,6 @@
 <main class="content">
   <div class="table-container">
-    <div class="button-container">
+    <div class="button-container" *ngIf="employees && employees.length">
       <div class="filter">
         <app-input-filter
           (filterChanged)="handleFilter($event)"
@@ -10,7 +10,21 @@
         Novo funcionário
       </button>
     </div>
-    <table mat-table [dataSource]="employees" class="mat-elevation-z8">
+    <div class="empty-message" *ngIf="emptyState">
+      <app-empty-state
+        [showMessage]="emptyState"
+        title="Ocorreu um problema ao listar os funcionários"
+        detail="Devido a instabilidade do servidor, ocorreu um problema ao listar, tente novamente!"
+        buttonMessage="Tentar novamente"
+        (buttonEvent)="handleTryAgain()"
+      ></app-empty-state>
+    </div>
+    <table
+      mat-table
+      [dataSource]="employees"
+      class="mat-elevation-z8"
+      *ngIf="employees && employees.length"
+    >
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>Código</th>
         <td mat-cell *matCellDef="let employee">{{ employee.id }}</td>

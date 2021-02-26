@@ -8,6 +8,12 @@
   .table-container {
     height: 80vh;
     width: 80%;
+    
+    .empty-message {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
 
     .button-container {
       display: flex;
