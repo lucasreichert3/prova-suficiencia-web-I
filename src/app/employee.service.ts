@@ -10,12 +10,15 @@ export class EmployeeService {
   SERVICE_URL = 'http://dummy.restapiexample.com/api/v1';
   constructor(private http: HttpClient) {}
 
-  listEmployees(): Observable<Employee[]> {
+  listEmployees(
+    page = 0,
+    size = 10
+  ): Observable<{ list: Employee[]; total: number }> {
     const storageEmplyees = localStorage.getItem('employees');
 
     return !storageEmplyees
       ? this.loadEmployees()
-      : of(JSON.parse(storageEmplyees));
+      : of(this.listEmployeesWithPaginator(page, size));
   }
 
   getEmployee(id: string): Observable<Employee> {
@@ -50,6 +53,35 @@ export class EmployeeService {
     return !employeesStorage
       ? this.deleteEmployeeRequest(id)
       : of(this.deleteEmployeeOnStorage(id));
+  }
+
+  filterEmployee(filter: string) {
+    const employeesStorage: Employee[] = JSON.parse(
+      localStorage.getItem('employees')
+    );
+    return employeesStorage.filter(
+      ({ employee_name, id }) =>
+        employee_name.startsWith(filter) || id.toString() === filter
+    );
+  }
+
+  private listEmployeesWithPaginator(
+    page = 0,
+    size = 10
+  ): { total: number; list: Employee[] } {
+    const storageEmplyees: Employee[] = JSON.parse(
+      localStorage.getItem('employees')
+    );
+    let start = 0;
+    let end = 10;
+    if (page > 0) {
+      start = page / 0.1;
+      end = size + start;
+    }
+    return {
+      list: storageEmplyees.slice(start, end),
+      total: storageEmplyees.length,
+    };
   }
 
   private deleteEmployeeOnStorage(id: number): void {
@@ -154,7 +186,7 @@ export class EmployeeService {
       .pipe(map(({ data }) => data));
   }
 
-  private loadEmployees(): Observable<Employee[]> {
+  private loadEmployees(): Observable<{ list: Employee[]; total: number }> {
     return this.http
       .get<{ status: string; data: Employee[] }>(
         `${this.SERVICE_URL}/employees`
@@ -162,7 +194,7 @@ export class EmployeeService {
       .pipe(
         map(({ data }) => {
           localStorage.setItem('employees', JSON.stringify(data));
-          return data;
+          return { list: data.slice(0, 10), total: data.length };
         })
       );
   }

@@ -12,10 +12,13 @@ import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confir
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit, OnDestroy {
-  employees: Employee[];
+  employees: Employee[] = [];
   unSubscribe = new Subject<void>();
   displayedColumns: string[] = ['id', 'name', 'salary', 'age', 'actions'];
   emptyState = false;
+  page = 0;
+  totalRecord = 0;
+  hasFilter = false;
 
   constructor(
     private employeeService: EmployeeService,
@@ -29,13 +32,21 @@ export class ListComponent implements OnInit, OnDestroy {
 
   listEmployees() {
     this.employeeService
-      .listEmployees()
+      .listEmployees(this.page)
       .pipe(takeUntil(this.unSubscribe))
       .subscribe(
-        (employees) => (this.employees = employees),
+        ({ total, list }) => {
+          this.employees = list
+          this.totalRecord = total;
+        },
         () => (this.emptyState = true),
         () => this.emptyState = false
       );
+  }
+
+  handlePageChange({ pageIndex }: { pageIndex: number }) {
+    this.page = pageIndex;
+    this.listEmployees();
   }
 
   handleEdit(employee: Employee) {
@@ -64,13 +75,12 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   handleFilter(filter: string) {
-    this.employees = this.employees.filter(({ employee_name }) =>
-      employee_name.startsWith(filter)
-    );
+    this.employees = this.employeeService.filterEmployee(filter);
+    this.hasFilter = !!filter;
 
-    if (!filter) {
+    if (!filter) 
       this.listEmployees();
-    }
+    
   }
 
   handleTryAgain() {

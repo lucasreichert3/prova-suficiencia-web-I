@@ -18,6 +18,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { InputFilterComponent } from './components/input-filter/input-filter.component';
 import { EmptyStateComponent } from './components/empty-state/empty-state.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'list' },
@@ -50,7 +51,8 @@ const routes: Routes = [
     MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

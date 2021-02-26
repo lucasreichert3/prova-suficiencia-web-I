@@ -1,14 +1,13 @@
 .content {
   display: flex;
   justify-content: center;
-  align-items: center;
   height: calc(100vh - 56px);
   width: 100%;
 
   .table-container {
     height: 80vh;
     width: 80%;
-    
+
     .empty-message {
       display: flex;
       width: 100%;
@@ -34,11 +33,11 @@
       width: 100%;
 
       th {
-        padding: 2.1em !important;
+        padding: 2.1em;
       }
 
       td {
-        padding: 1.4em 1.8em !important;
+        padding: 0.9em 1.8em;
         transition: 200ms;
       }
 
@@ -49,6 +48,44 @@
         &:hover {
           color: #8e8e8e;
         }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 740px) {
+  .table-container {
+    td {
+      padding: 0.9em 1em !important;
+    }
+
+    th {
+      padding: 1.9em 1em !important;
+    }
+  }
+}
+
+:host::ng-deep {
+  @media only screen and (max-width: 590px) {
+    .table-container {
+      thead {
+        display: none;
+      }
+
+      #id, #name {
+        width: 100%;
+      }
+
+      #salary, #age {
+        width: 100%;
+      }
+
+      td {
+        padding: 0.9em 1em !important;
+      }
+
+      th {
+        padding: 1.9em 1em !important;
       }
     }
   }
