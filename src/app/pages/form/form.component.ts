@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Employee, EmployeeService } from 'src/app/employee.service';
 
 @Component({
@@ -9,10 +11,11 @@ import { Employee, EmployeeService } from 'src/app/employee.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
   employeeForm: FormGroup;
   editinEmployee = false;
   currentEmployee: Employee;
+  unSubscribe = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -34,14 +37,17 @@ export class FormComponent implements OnInit {
   }
 
   handleLoadEmployee(id: string) {
-    this.employeeService.getEmployee(id).subscribe((employee) => {
-      this.currentEmployee = employee;
-      this.employeeForm.setValue({
-        employee_name: employee.employee_name,
-        employee_salary: employee.employee_salary,
-        employee_age: employee.employee_age,
+    this.employeeService
+      .getEmployee(id)
+      .pipe(takeUntil(this.unSubscribe))
+      .subscribe((employee) => {
+        this.currentEmployee = employee;
+        this.employeeForm.setValue({
+          employee_name: employee.employee_name,
+          employee_salary: employee.employee_salary,
+          employee_age: employee.employee_age,
+        });
       });
-    });
   }
 
   getFieldControl(fieldName: string) {
@@ -67,6 +73,7 @@ export class FormComponent implements OnInit {
         employee_age,
         id: this.currentEmployee.id,
       })
+      .pipe(takeUntil(this.unSubscribe))
       .subscribe(
         () => this.handleSuccessSave(),
         () => this.handleErrorSave()
@@ -80,6 +87,7 @@ export class FormComponent implements OnInit {
         employee_salary,
         employee_age,
       })
+      .pipe(takeUntil(this.unSubscribe))
       .subscribe(
         () => this.handleSuccessSave(),
         () => this.handleErrorSave()
@@ -99,5 +107,10 @@ export class FormComponent implements OnInit {
     this._snackBar.open(message, '', {
       duration: 2000,
     });
+  }
+
+  ngOnDestroy() {
+    this.unSubscribe.next();
+    this.unSubscribe.complete();
   }
 }

@@ -5,22 +5,14 @@
     </mat-form-field>
     <button
       mat-mini-fab
-      color="primary"
+      [color]="hasFilter ? 'basic' : 'primary'"
       aria-label="Example icon button with a filter list icon"
       style="margin-left: 1em"
+      (click)="handleSearch()"
     >
-      <span class="icon-link material-icons" (click)="handleSearch()">
-        search
+      <span class="icon-link material-icons">
+        {{ hasFilter ? 'close' : 'search'}}
       </span>
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      *ngIf="hasInputValue()"
-      (click)="handleCleanFilter()"
-      style="margin-left: 1rem;"
-    >
-      Limpar Filtro
     </button>
   </div>
 </form>

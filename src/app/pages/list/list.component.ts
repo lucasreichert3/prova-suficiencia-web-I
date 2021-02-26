@@ -68,20 +68,28 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   handleDelete(employee: Employee) {
-    this.employeeService.deleteEmployee(employee.id).subscribe(
-      () => {
-        this.employees = this.employees.filter(({ id }) => employee.id !== id);
-      },
-      () => this.displayToast('Erro ao excluir, tente novamentem mais tarde!')
-    );
+    this.employeeService
+      .deleteEmployee(employee.id)
+      .pipe(takeUntil(this.unSubscribe))
+      .subscribe(
+        () => {
+          this.employees = this.employees.filter(
+            ({ id }) => employee.id !== id
+          );
+        },
+        () => this.displayToast('Erro ao excluir, tente novamentem mais tarde!')
+      );
   }
 
   openDialog(employee: Employee) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) this.handleDelete(employee);
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.unSubscribe))
+      .subscribe((result) => {
+        if (result) this.handleDelete(employee);
+      });
   }
 
   handleFilter(filter: string) {
